@@ -210,11 +210,11 @@
 <nav>
   <a class="nav-logo" onclick="navigate('home')">L<span>D</span></a>
   <ul class="nav-links">
-    <li><a onclick="navigate('home')" data-page="home">A propos</a></li>
-    <li><a onclick="navigate('home')" data-page="home">Competences</a></li>
+    <li><a onclick="navHome('apropos')" data-page="home">A propos</a></li>
+    <li><a onclick="navHome('competences')" data-page="home">Competences</a></li>
     <li><a onclick="navigate('projets')" data-page="projets">Projets</a></li>
     <li><a onclick="navigate('veille')" data-page="veille">Veille</a></li>
-    <li><a onclick="navigate('home')" data-page="home">Contact</a></li>
+    <li><a onclick="navHome('contact')" data-page="home">Contact</a></li>
   </ul>
 </nav>
 
@@ -570,6 +570,14 @@
      ROUTER SPA
   ═══════════════════════════════════════ */
   const PAGES = ['home', 'projets', 'veille'];
+
+  function navHome(sectionId) {
+    navigate('home');
+    setTimeout(function() {
+      var el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }
 
   function navigate(target) {
     PAGES.forEach(p => {
