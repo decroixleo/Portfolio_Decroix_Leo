@@ -579,9 +579,9 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (target === 'home') setTimeout(renderPdfCanvas, 50);
 
-    // URL simulée
-    const paths = { home: '/', projets: '/projets', veille: '/veille' };
-    history.pushState({ page: target }, '', paths[target] || '/');
+    // URL par ancre (évite le 404 au refresh)
+    const hashes = { home: '', projets: '#projets', veille: '#veille' };
+    history.replaceState(null, '', hashes[target] !== undefined ? hashes[target] || location.pathname.replace(/#.*/, '') : '');
 
     // Active state nav
     document.querySelectorAll('.nav-links a').forEach(a => {
@@ -591,13 +591,17 @@
   }
 
   // Bouton retour navigateur
-  window.addEventListener('popstate', function(e) {
-    const page = (e.state && e.state.page) ? e.state.page : 'home';
+  window.addEventListener('popstate', function() {
+    const hash = location.hash.replace('#', '') || 'home';
+    const page = ['projets', 'veille'].includes(hash) ? hash : 'home';
     navigate(page);
   });
 
-  // Initialiser l'état de l'URL au chargement
-  history.replaceState({ page: 'home' }, '', '/');
+  // Charger la bonne page au refresh selon le hash
+  (function() {
+    const hash = location.hash.replace('#', '');
+    if (hash === 'projets' || hash === 'veille') navigate(hash);
+  })();
 
   /* ═══════════════════════════════════════
      PDF.js — Tableau de compétences
