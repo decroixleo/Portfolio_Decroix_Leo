@@ -452,30 +452,32 @@
     <div class="section-label">Savoir-faire</div>
     <h2 class="section-title">Tableau des <span>competences</span></h2>
 
-    <div class="tableau-wrapper">
-      <!-- Conteneur cliquable pour ouvrir le PDF en plein écran -->
-      <div class="pdf-frame-container" onclick="openPdfLightbox()" title="Cliquer pour agrandir">
-        <iframe
-          src="Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH"
-          title="Tableau de synthèse E4 BTS SIO SISR">
-        </iframe>
-        <div class="pdf-overlay-hint">
-          <span>🔍 Cliquer pour agrandir</span>
-        </div>
-      </div>
+   <div class="tableau-wrapper">
+  <canvas id="tableau-canvas" style="width:100%;border-radius:8px;display:block;"></canvas>
+  <p style="margin-top:1rem;font-size:.78rem;color:var(--muted2);">
+    BTS SIO — Session 2024-2026 — DECROIX Léo — N° candidat : 02541496689 — AFTEC — Option SISR
+  </p>
+</div>
 
-      <!-- Barre d'actions sous le PDF -->
-      <div class="pdf-actions">
-        <p class="pdf-meta">
-          BTS SIO — Session 2024-2026 — DECROIX Léo — N° candidat : 02541496689 — AFTEC — Option SISR
-        </p>
-        <div class="pdf-btn-group">
-          <button class="pdf-btn pdf-btn-outline" onclick="openPdfLightbox()">&#128269; Agrandir</button>
-          <a href="Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf" target="_blank" class="pdf-btn pdf-btn-outline">&#8599; Ouvrir</a>
-          <a href="Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf" download class="pdf-btn pdf-btn-primary">&#8595; Télécharger</a>
-        </div>
-      </div>
-    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  pdfjsLib.getDocument('Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf').promise
+    .then(function(pdf) {
+      return pdf.getPage(1);
+    })
+    .then(function(page) {
+      var canvas  = document.getElementById('tableau-canvas');
+      var scale   = 2.5; // haute résolution
+      var viewport = page.getViewport({ scale: scale });
+      canvas.height = viewport.height;
+      canvas.width  = viewport.width;
+      canvas.style.width = '100%';
+      page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+    });
+</script>
 
   </div>
 </section>
