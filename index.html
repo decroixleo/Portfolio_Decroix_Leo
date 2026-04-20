@@ -351,10 +351,6 @@
         <h2 class="section-title" style="margin-bottom:0">Projets <span>d'etudes</span></h2>
         <p style="color:var(--muted);margin-top:.75rem;font-size:.95rem;">Projets realises dans le cadre du BTS SIO SISR — competences E4 couvertes.</p>
       </div>
-      <div class="page-hero-nav">
-        <a onclick="navigate('home')">← Accueil</a>
-        <a onclick="navigate('veille')" class="btn-primary">Voir mes veilles</a>
-      </div>
     </div>
   </div>
 
@@ -436,10 +432,6 @@
         <div class="section-label">Veille technologique</div>
         <h2 class="section-title" style="margin-bottom:0">Mes <span>veilles</span></h2>
         <p style="color:var(--muted);margin-top:.75rem;font-size:.95rem;">Deux themes suivis regulierement dans le cadre du BTS SIO SISR.</p>
-      </div>
-      <div class="page-hero-nav">
-        <a onclick="navigate('home')">← Accueil</a>
-        <a onclick="navigate('projets')" class="btn-primary">Voir mes projets</a>
       </div>
     </div>
   </div>
@@ -585,6 +577,7 @@
     });
     document.getElementById('page-' + target).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'instant' });
+    if (target === 'home') setTimeout(renderPdfCanvas, 50);
 
     // URL simulée
     const paths = { home: '/', projets: '/projets', veille: '/veille' };
@@ -612,17 +605,25 @@
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
+  var _pdfPage = null;
   pdfjsLib.getDocument('Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf').promise
     .then(function(pdf) { return pdf.getPage(1); })
     .then(function(page) {
-      var canvas = document.getElementById('tableau-canvas');
-      var scale = 2.5;
-      var viewport = page.getViewport({ scale: scale });
-      canvas.height = viewport.height;
-      canvas.width  = viewport.width;
-      canvas.style.width = '100%';
-      page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+      _pdfPage = page;
+      renderPdfCanvas();
     });
+
+  function renderPdfCanvas() {
+    if (!_pdfPage) return;
+    var canvas = document.getElementById('tableau-canvas');
+    if (!canvas) return;
+    var scale = 2.5;
+    var viewport = _pdfPage.getViewport({ scale: scale });
+    canvas.height = viewport.height;
+    canvas.width  = viewport.width;
+    canvas.style.width = '100%';
+    _pdfPage.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+  }
 
   /* ═══════════════════════════════════════
      Lightbox PDF
