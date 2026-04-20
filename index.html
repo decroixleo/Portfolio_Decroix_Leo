@@ -16,31 +16,13 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-    /* ── Navigation ── */
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; background: rgba(10,10,15,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; cursor: pointer; text-decoration: none; color: var(--text); }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
     .nav-logo span { color: var(--accent); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color .2s; cursor: pointer; }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-    .nav-links a.active { color: var(--accent); }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
 
-    /* ── Pages ── */
-    .page { display: none; }
-    .page.active { display: block; }
-
-    /* ── Page transition ── */
-    @keyframes fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    .page.active { animation: fadein .3s ease forwards; }
-
-    /* ── Breadcrumb ── */
-    .breadcrumb { display: flex; align-items: center; gap: 8px; padding: 80px 2rem 0; max-width: 1000px; margin: 0 auto; font-size: .8rem; color: var(--muted2); }
-    .breadcrumb a { color: var(--muted); text-decoration: none; transition: color .2s; cursor: pointer; }
-    .breadcrumb a:hover { color: var(--accent); }
-    .breadcrumb .sep { color: var(--muted2); }
-    .breadcrumb .current { color: var(--accent); font-weight: 600; }
-
-    /* ── Hero ── */
     #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 80px 2rem 4rem; position: relative; overflow: hidden; }
     .hero-grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px); background-size: 60px 60px; }
     .hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
@@ -59,14 +41,12 @@
     .btn-outline { background: transparent; border: 1px solid var(--border2); color: var(--text); }
     .btn-outline:hover { background: var(--bg3); }
 
-    /* ── Sections ── */
     section { padding: 6rem 2rem; }
     .container { max-width: 1000px; margin: 0 auto; }
     .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: .75rem; }
     .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -0.02em; margin-bottom: 3rem; }
     .section-title span { color: var(--accent); }
 
-    /* ── À propos ── */
     #apropos { background: var(--bg2); border-top: 1px solid var(--border); }
     .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start; }
     .about-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; text-align: center; }
@@ -83,12 +63,228 @@
     .info-item .label { font-size: .7rem; color: var(--muted2); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 3px; }
     .info-item .value { font-size: .875rem; font-weight: 500; }
 
-    /* ── Compétences ── */
     #competences { border-top: 1px solid var(--border); }
-    .tableau-wrapper { overflow: hidden; border-radius: 14px; border: 1px solid var(--border); background: var(--card); padding: 1.5rem; text-align: center; position: relative; }
 
-    /* ── Projets ── */
-    .page-projets { background: var(--bg); }
+    /* ── Tableau PDF ── */
+    .tableau-wrapper {
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .pdf-frame-container {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .pdf-frame-container iframe {
+      width: 100%;
+      height: 560px;
+      border: none;
+      display: block;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .pdf-overlay-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(10,10,15,0.45) 0%, transparent 40%);
+      border-radius: 10px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .25s;
+    }
+
+    .pdf-frame-container:hover .pdf-overlay-hint { opacity: 1; }
+
+    .pdf-overlay-hint span {
+      background: rgba(10,10,15,0.88);
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(79,142,247,0.35);
+      letter-spacing: .04em;
+    }
+
+    .pdf-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .pdf-meta {
+      font-size: .78rem;
+      color: var(--muted2);
+      text-align: left;
+    }
+
+    .pdf-btn-group {
+      display: flex;
+      gap: .6rem;
+    }
+
+    .pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+    }
+
+    .pdf-btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .pdf-btn-primary:hover { background: #6fa0ff; transform: translateY(-1px); }
+
+    .pdf-btn-outline {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text);
+    }
+
+    .pdf-btn-outline:hover { background: var(--bg3); }
+
+    /* ── Lightbox PDF plein écran ── */
+    .pdf-lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5,5,10,0.97);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .pdf-lightbox-overlay.active { display: flex; }
+
+    .pdf-lightbox-inner {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      height: 92vh;
+      animation: lb-in .25s cubic-bezier(.22,1,.36,1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes lb-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+    .pdf-lightbox-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .6rem 1rem;
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 12px 12px 0 0;
+    }
+
+    .pdf-lightbox-bar span {
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .pdf-lightbox-bar-actions { display: flex; gap: .5rem; }
+
+    .pdf-lb-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 7px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all .15s;
+    }
+
+    .pdf-lb-btn-close {
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      color: var(--text);
+    }
+    .pdf-lb-btn-close:hover { background: var(--red); color: #fff; border-color: var(--red); }
+
+    .pdf-lb-btn-dl {
+      background: var(--accent);
+      color: #fff;
+    }
+    .pdf-lb-btn-dl:hover { background: #6fa0ff; }
+
+    .pdf-lightbox-frame {
+      flex: 1;
+      border: 1px solid var(--border2);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+    }
+
+    .pdf-lightbox-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── Ancien lightbox image (conservé) ── */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(5,5,10,0.95);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 95vw;
+      max-height: 92vh;
+      animation: lb-in .25s cubic-bezier(.22,1,.36,1);
+    }
+    .lightbox-inner img { max-width: 95vw; max-height: 88vh; display: block; border-radius: 10px; border: 1px solid var(--border2); box-shadow: 0 32px 80px rgba(0,0,0,.8); object-fit: contain; }
+    .lightbox-close { position: absolute; top: -14px; right: -14px; width: 36px; height: 36px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border2); color: var(--text); font-size: 1.1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s, color .15s; line-height: 1; font-family: sans-serif; }
+    .lightbox-close:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .lightbox-caption { text-align: center; margin-top: .75rem; font-size: .75rem; color: var(--muted2); font-family: 'Space Grotesk', sans-serif; }
+
+    #projets { background: var(--bg2); border-top: 1px solid var(--border); }
     .projets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .projet-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color .2s, transform .2s; }
     .projet-card:hover { border-color: rgba(79,142,247,0.35); transform: translateY(-3px); }
@@ -102,18 +298,9 @@
     .tech-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .tech-badge { font-size: .72rem; font-weight: 600; padding: 3px 9px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--border2); color: var(--muted); }
 
-    /* ── Page hero (projets/veille) ── */
-    .page-hero { padding: 6rem 2rem 4rem; border-bottom: 1px solid var(--border); background: var(--bg2); }
-    .page-hero .container { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
-    .page-hero-nav { display: flex; gap: .75rem; }
-    .page-hero-nav a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 8px; font-size: .85rem; font-weight: 600; text-decoration: none; border: 1px solid var(--border2); color: var(--muted); transition: all .2s; cursor: pointer; }
-    .page-hero-nav a:hover { background: var(--bg3); color: var(--text); }
-    .page-hero-nav a.btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .page-hero-nav a.btn-primary:hover { background: #6fa0ff; }
-
-    /* ── Veille ── */
-    .page-veille { background: var(--bg); }
+    #veille { border-top: 1px solid var(--border); }
     .veille-intro { color: var(--muted); margin-bottom: 2.5rem; max-width: 600px; line-height: 1.7; }
+    .veille-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
     .veille-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
     .veille-header { padding: 1.25rem 1.5rem 1rem; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
     .veille-topic { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .3rem; }
@@ -128,7 +315,6 @@
     .rss-source-label { font-size: .68rem; color: var(--accent); font-weight: 600; }
     .rss-date { font-size: .68rem; color: var(--muted2); }
 
-    /* ── Contact ── */
     #contact { background: var(--bg2); border-top: 1px solid var(--border); }
     .contact-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3rem; align-items: start; }
     .contact-info { display: flex; flex-direction: column; gap: 1rem; }
@@ -152,7 +338,6 @@
     .form-submit { width: 100%; padding: 13px; border-radius: 10px; background: var(--accent); border: none; color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: .95rem; font-weight: 700; cursor: pointer; transition: background .2s, transform .15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .form-submit:hover { background: #6fa0ff; transform: translateY(-1px); }
 
-    /* ── Footer ── */
     footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
     .footer-name { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; margin-bottom: .5rem; }
     .footer-name span { color: var(--accent); }
@@ -162,42 +347,27 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { color: var(--muted2); font-size: .75rem; }
 
-    /* ── Lightbox PDF ── */
-    .pdf-lightbox-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(5,5,10,0.97); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
-    .pdf-lightbox-overlay.active { display: flex; }
-    .pdf-lightbox-inner { position: relative; width: 100%; max-width: 1100px; height: 92vh; animation: lb-in .25s cubic-bezier(.22,1,.36,1); display: flex; flex-direction: column; }
-    @keyframes lb-in { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
-    .pdf-lightbox-bar { display: flex; align-items: center; justify-content: space-between; padding: .6rem 1rem; background: var(--bg3); border: 1px solid var(--border2); border-radius: 12px 12px 0 0; }
-    .pdf-lightbox-bar span { font-size: .8rem; color: var(--muted); font-weight: 500; }
-    .pdf-lightbox-bar-actions { display: flex; gap: .5rem; }
-    .pdf-lb-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 7px; font-family: 'Space Grotesk', sans-serif; font-size: .75rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all .15s; }
-    .pdf-lb-btn-close { background: var(--bg); border: 1px solid var(--border2); color: var(--text); }
-    .pdf-lb-btn-close:hover { background: var(--red); color: #fff; border-color: var(--red); }
-    .pdf-lb-btn-dl { background: var(--accent); color: #fff; }
-    .pdf-lb-btn-dl:hover { background: #6fa0ff; }
-    .pdf-lightbox-frame { flex: 1; border: 1px solid var(--border2); border-top: none; border-radius: 0 0 12px 12px; overflow: hidden; }
-    .pdf-lightbox-frame iframe { width: 100%; height: 100%; border: none; display: block; }
-
-    /* ── Responsive ── */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
       .nav-links { gap: 1rem; }
-      .about-grid, .projets-grid, .contact-layout { grid-template-columns: 1fr; }
+      .about-grid, .projets-grid, .veille-grid, .contact-layout { grid-template-columns: 1fr; }
       .info-grid, .form-row { grid-template-columns: 1fr; }
-      .page-hero .container { flex-direction: column; align-items: flex-start; }
+      .pdf-frame-container iframe { height: 380px; }
+      .pdf-actions { flex-direction: column; align-items: flex-start; }
+      .pdf-lightbox-inner { height: 95vh; }
     }
   </style>
 </head>
 <body>
 
-<!-- Lightbox PDF -->
+<!-- Lightbox PDF plein écran -->
 <div class="pdf-lightbox-overlay" id="pdf-lightbox">
   <div class="pdf-lightbox-inner">
     <div class="pdf-lightbox-bar">
       <span>📄 Tableau de synthèse E4 — DECROIX Léo — N° candidat : 02541496689</span>
       <div class="pdf-lightbox-bar-actions">
-        <a href="Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf" download class="pdf-lb-btn pdf-lb-btn-dl">↓ Télécharger</a>
-        <button class="pdf-lb-btn pdf-lb-btn-close" onclick="closePdfLightbox()">✕ Fermer</button>
+        <a href="Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf" download class="pdf-lb-btn pdf-lb-btn-dl">&#8595; Télécharger</a>
+        <button class="pdf-lb-btn pdf-lb-btn-close" onclick="closePdfLightbox()">&#215; Fermer</button>
       </div>
     </div>
     <div class="pdf-lightbox-frame">
@@ -206,441 +376,414 @@
   </div>
 </div>
 
-<!-- Navigation -->
+<!-- Lightbox image (conservé) -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightboxBtn()" title="Fermer">&#215;</button>
+    <img id="lightbox-img" src="" alt="Tableau de synthèse E4 BTS SIO SISR" />
+    <div class="lightbox-caption">Tableau de synthèse E4 — BTS SIO SISR — DECROIX Léo — N° candidat : 02541496689</div>
+  </div>
+</div>
+
 <nav>
-  <a class="nav-logo" onclick="navigate('home')">L<span>D</span></a>
+  <div class="nav-logo">L<span>D</span></div>
   <ul class="nav-links">
-    <li><a onclick="navigate('home')" data-page="home">A propos</a></li>
-    <li><a onclick="navigate('home')" data-page="home">Competences</a></li>
-    <li><a onclick="navigate('projets')" data-page="projets">Projets</a></li>
-    <li><a onclick="navigate('veille')" data-page="veille">Veille</a></li>
-    <li><a onclick="navigate('home')" data-page="home">Contact</a></li>
+    <li><a href="#apropos">A propos</a></li>
+    <li><a href="#competences">Competences</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#veille">Veille</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<!-- ════════════════════════════════════════
-     PAGE HOME
-════════════════════════════════════════ -->
-<div id="page-home" class="page active">
-
-  <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-content">
-      <div class="hero-badge">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
-      <h1>
-        <div class="first">Leo</div>
-        <div class="last">Decroix</div>
-      </h1>
-      <p class="hero-sub">Technicien informatique en alternance, specialise en Solutions d'Infrastructure, Systemes et Reseaux.</p>
-      <div class="hero-ctas">
-        <button onclick="navigate('projets')" class="btn btn-primary">Voir mes projets</button>
-        <button onclick="document.getElementById('competences').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Mes competences</button>
-        <a href="CV_DECROIX-LEO.pdf" download class="btn btn-outline">↓ Telecharger mon CV</a>
-      </div>
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
+    <h1>
+      <div class="first">Leo</div>
+      <div class="last">Decroix</div>
+    </h1>
+    <p class="hero-sub">Technicien informatique en alternance, specialise en Solutions d'Infrastructure, Systemes et Reseaux.</p>
+    <div class="hero-ctas">
+      <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+      <a href="#competences" class="btn btn-outline">Mes competences</a>
+      <a href="CV_DECROIX-LEO.pdf" download class="btn btn-outline">&#8595; Telecharger mon CV</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="apropos">
-    <div class="container">
-      <div class="section-label">Presentation</div>
-      <h2 class="section-title">A propos <span>de moi</span></h2>
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="avatar">LD</div>
-          <h3>Leo Decroix</h3>
-          <div class="role">Technicien Informatique</div>
-          <div class="about-tags">
-            <span class="tag">Reseaux</span>
-            <span class="tag">Systemes</span>
-            <span class="tag">Virtualisation</span>
-            <span class="tag">Active Directory</span>
-            <span class="tag">Linux</span>
-          </div>
-        </div>
-        <div>
-          <div class="about-text">
-            <p>Etudiant en BTS SIO option SISR a l'<strong>AFTEC</strong> (2024-2026), actuellement en alternance chez <strong>La Boutique Regeco</strong> en tant que technicien informatique. Titulaire d'un Bac pro Systeme Numerique (Lycee Charles Tellier, 2024).</p>
-            <p>J'interviens sur la reparation de materiels, le depannage, l'assistance utilisateur et la vente d'equipements. J'ai egalement effectue des stages chez <strong>Lecapitaine</strong> (service infrastructure) et <strong>Daltoner</strong> (service apres-vente).</p>
-          </div>
-          <div class="info-grid">
-            <div class="info-item"><div class="label">Formation</div><div class="value">BTS SIO SISR -- AFTEC</div></div>
-            <div class="info-item"><div class="label">Alternance</div><div class="value">La Boutique Regeco</div></div>
-            <div class="info-item"><div class="label">E-mail</div><div class="value"><a href="mailto:decroixleo55@gmail.com" style="color:var(--accent);text-decoration:none">decroixleo55@gmail.com</a></div></div>
-            <div class="info-item"><div class="label">Telephone</div><div class="value">07 68 01 18 69</div></div>
-          </div>
+<section id="apropos">
+  <div class="container">
+    <div class="section-label">Presentation</div>
+    <h2 class="section-title">A propos <span>de moi</span></h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="avatar">LD</div>
+        <h3>Leo Decroix</h3>
+        <div class="role">Technicien Informatique</div>
+        <div class="about-tags">
+          <span class="tag">Reseaux</span>
+          <span class="tag">Systemes</span>
+          <span class="tag">Virtualisation</span>
+          <span class="tag">Active Directory</span>
+          <span class="tag">Linux</span>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="competences">
-    <div class="container">
-      <div class="section-label">Savoir-faire</div>
-      <h2 class="section-title">Tableau des <span>competences</span></h2>
-      <div class="tableau-wrapper">
-        <canvas id="tableau-canvas" style="width:100%;border-radius:8px;display:block;"></canvas>
-        <p style="margin-top:1rem;font-size:.78rem;color:var(--muted2);">
-          BTS SIO — Session 2024-2026 — DECROIX Léo — N° candidat : 02541496689 — AFTEC — Option SISR
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container">
-      <div class="section-label">Me joindre</div>
-      <h2 class="section-title">Formulaire de <span>contact</span></h2>
-      <div class="contact-layout">
-        <div class="contact-info">
-          <div>
-            <div class="contact-info-title">Une question ? Un projet ?</div>
-            <p class="contact-info-sub">N'hesite pas a me contacter pour toute opportunite de stage, d'alternance, ou simplement pour echanger sur un projet technique.</p>
-          </div>
-          <div class="contact-links">
-            <a href="mailto:decroixleo55@gmail.com" class="contact-link">
-              <div class="contact-link-icon" style="background:rgba(79,142,247,0.12);color:var(--accent)">📧</div>
-              <div class="contact-link-text"><span class="contact-link-label">E-mail</span><span class="contact-link-value">decroixleo55@gmail.com</span></div>
-            </a>
-            <a href="https://www.linkedin.com/in/l%C3%A9o-decroix-184489350/" target="_blank" class="contact-link">
-              <div class="contact-link-icon" style="background:rgba(124,92,252,0.12);color:var(--accent2)">💼</div>
-              <div class="contact-link-text"><span class="contact-link-label">LinkedIn</span><span class="contact-link-value">linkedin.com/in/leo-decroix</span></div>
-            </a>
-            <a href="https://github.com/decroixleo" target="_blank" class="contact-link">
-              <div class="contact-link-icon" style="background:rgba(255,255,255,0.06);color:var(--text)">🐙</div>
-              <div class="contact-link-text"><span class="contact-link-label">GitHub</span><span class="contact-link-value">github.com/decroixleo</span></div>
-            </a>
-          </div>
-        </div>
-        <div class="contact-form-wrap">
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom:0"><label class="form-label" for="f-nom">Nom</label><input class="form-input" type="text" id="f-nom" placeholder="Votre nom" /></div>
-            <div class="form-group" style="margin-bottom:0"><label class="form-label" for="f-email">E-mail</label><input class="form-input" type="email" id="f-email" placeholder="votre@email.fr" /></div>
-          </div>
-          <div class="form-group"><label class="form-label" for="f-sujet">Sujet</label><input class="form-input" type="text" id="f-sujet" placeholder="Stage, alternance, question technique..." /></div>
-          <div class="form-group"><label class="form-label" for="f-message">Message</label><textarea class="form-textarea" id="f-message" placeholder="Votre message..."></textarea></div>
-          <button class="form-submit">Envoyer le message →</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-name">Leo <span>Decroix</span></div>
-    <div class="footer-sub">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
-    <div class="footer-links">
-      <a href="mailto:decroixleo55@gmail.com">decroixleo55@gmail.com</a>
-      <a href="https://www.linkedin.com/in/l%C3%A9o-decroix-184489350/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/decroixleo" target="_blank">GitHub</a>
-    </div>
-    <div class="footer-copy">2026 Leo Decroix -- Portfolio BTS SIO SISR</div>
-  </footer>
-
-</div><!-- /page-home -->
-
-
-<!-- ════════════════════════════════════════
-     PAGE PROJETS
-════════════════════════════════════════ -->
-<div id="page-projets" class="page page-projets">
-
-  <div class="page-hero">
-    <div class="container">
       <div>
-        <div class="section-label">Realisations</div>
-        <h2 class="section-title" style="margin-bottom:0">Projets <span>d'etudes</span></h2>
-        <p style="color:var(--muted);margin-top:.75rem;font-size:.95rem;">Projets realises dans le cadre du BTS SIO SISR — competences E4 couvertes.</p>
+        <div class="about-text">
+          <p>Etudiant en BTS SIO option SISR a l'<strong>AFTEC</strong> (2024-2026), actuellement en alternance chez <strong>La Boutique Regeco</strong> en tant que technicien informatique. Titulaire d'un Bac pro Systeme Numerique (Lycee Charles Tellier, 2024).</p>
+          <p>J'interviens sur la reparation de materiels, le depannage, l'assistance utilisateur et la vente d'equipements. J'ai egalement effectue des stages chez <strong>Lecapitaine</strong> (service infrastructure) et <strong>Daltoner</strong> (service apres-vente), qui m'ont permis de developper mes competences techniques et confirmer mon attrait pour l'informatique.</p>
+        </div>
+        <div class="info-grid">
+          <div class="info-item"><div class="label">Formation</div><div class="value">BTS SIO SISR -- AFTEC</div></div>
+          <div class="info-item"><div class="label">Alternance</div><div class="value">La Boutique Regeco</div></div>
+          <div class="info-item"><div class="label">E-mail</div><div class="value"><a href="mailto:decroixleo55@gmail.com" style="color:var(--accent);text-decoration:none">decroixleo55@gmail.com</a></div></div>
+          <div class="info-item"><div class="label">Telephone</div><div class="value">07 68 01 18 69</div></div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <section style="padding:4rem 2rem;">
-    <div class="container">
-      <div class="projets-grid">
+<section id="competences">
+  <div class="container">
+    <div class="section-label">Savoir-faire</div>
+    <h2 class="section-title">Tableau des <span>competences</span></h2>
 
-        <div class="projet-card">
-          <div class="projet-header">
-            <div class="projet-num">Projet 01</div>
-            <div class="projet-title">Installation complete d'une infrastructure fonctionnelle</div>
-            <span class="projet-type" style="background:rgba(79,142,247,0.1);color:var(--accent);border:1px solid rgba(79,142,247,0.25)">Infrastructure Systemes &amp; Reseaux</span>
-          </div>
-          <div class="projet-body">
-            <p class="projet-desc">Remplacement du switch par un modele plus performant, mise en place d'un serveur NAS pour le stockage centralise des donnees, et integration des postes au reseau avec attribution d'adresses IP fixes.</p>
-            <div class="projet-section-title">Competences E4 couvertes</div>
-            <div class="tech-list" style="margin-bottom:1rem">
-              <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Gerer le patrimoine</span>
-              <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Repondre aux incidents</span>
-              <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Travailler en mode projet</span>
-              <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Mettre a disposition un service</span>
-              <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Developpement professionnel</span>
-            </div>
-            <div class="projet-section-title">Technologies utilisees</div>
-            <div class="tech-list">
-              <span class="tech-badge">Switch reseau</span><span class="tech-badge">Serveur NAS</span><span class="tech-badge">IP fixe</span><span class="tech-badge">TCP/IP</span>
-            </div>
-          </div>
-        </div>
+   <div class="tableau-wrapper">
+  <canvas id="tableau-canvas" style="width:100%;border-radius:8px;display:block;"></canvas>
+  <p style="margin-top:1rem;font-size:.78rem;color:var(--muted2);">
+    BTS SIO — Session 2024-2026 — DECROIX Léo — N° candidat : 02541496689 — AFTEC — Option SISR
+  </p>
+</div>
 
-        <div class="projet-card">
-          <div class="projet-header">
-            <div class="projet-num">Projet 02</div>
-            <div class="projet-title">Automatisation de deploiement de serveur de jeu Minecraft</div>
-            <span class="projet-type" style="background:rgba(48,232,192,0.1);color:var(--accent3);border:1px solid rgba(48,232,192,0.25)">Scripting &amp; Automatisation</span>
-          </div>
-          <div class="projet-body">
-            <p class="projet-desc">Mise en place d'un systeme d'automatisation pour le deploiement de serveurs de jeu Minecraft : creation de scripts permettant d'installer, configurer et lancer automatiquement un serveur, gestion des dependances (Java, configuration memoire).</p>
-            <div class="projet-section-title">Competences E4 couvertes</div>
-            <div class="tech-list" style="margin-bottom:1rem">
-              <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Gerer le patrimoine</span>
-              <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Travailler en mode projet</span>
-              <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Mettre a disposition un service</span>
-              <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Developpement professionnel</span>
-            </div>
-            <div class="projet-section-title">Technologies utilisees</div>
-            <div class="tech-list">
-              <span class="tech-badge">Linux</span><span class="tech-badge">Bash / Shell</span><span class="tech-badge">Java</span><span class="tech-badge">SSH</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-name">Leo <span>Decroix</span></div>
-    <div class="footer-sub">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
-    <div class="footer-links">
-      <a onclick="navigate('home')" style="cursor:pointer">Accueil</a>
-      <a onclick="navigate('veille')" style="cursor:pointer">Veille</a>
-      <a href="mailto:decroixleo55@gmail.com">decroixleo55@gmail.com</a>
-    </div>
-    <div class="footer-copy">2026 Leo Decroix -- Portfolio BTS SIO SISR</div>
-  </footer>
-
-</div><!-- /page-projets -->
-
-
-<!-- ════════════════════════════════════════
-     PAGE VEILLE
-════════════════════════════════════════ -->
-<div id="page-veille" class="page page-veille">
-
-  <div class="page-hero">
-    <div class="container">
-      <div>
-        <div class="section-label">Veille technologique</div>
-        <h2 class="section-title" style="margin-bottom:0">Mes <span>veilles</span></h2>
-        <p style="color:var(--muted);margin-top:.75rem;font-size:.95rem;">Deux themes suivis regulierement dans le cadre du BTS SIO SISR.</p>
-      </div>
-    </div>
-  </div>
-
-  <section style="padding:4rem 2rem;">
-    <div class="container">
-      <div style="display:flex;flex-direction:column;gap:3rem;">
-
-        <!-- Veille 1 : IA -->
-        <div class="veille-card">
-          <div class="veille-header">
-            <div>
-              <div class="veille-topic">🧠 L'IA au sein des entreprises</div>
-              <div class="veille-desc">Comment l'intelligence artificielle transforme les organisations et les metiers.</div>
-            </div>
-          </div>
-          <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);color:var(--muted);font-size:.875rem;line-height:1.8;">
-            <p>L'intelligence artificielle (IA) designe des systemes capables d'apprendre a partir de donnees pour accomplir des taches jusqu'ici reservees aux humains. En entreprise, elle s'integre dans les processus metiers pour <strong style="color:var(--text)">gagner en productivite, reduire les erreurs et personnaliser les services</strong>.</p>
-            <p style="margin-top:.75rem;">En 2025, l'acces des collaborateurs a l'IA a augmente de 50 % et 82 % des entreprises utilisent l'IA generative au moins une fois par semaine.</p>
-          </div>
-          <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
-            <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.75rem;">Schema — Cas d'usage de l'IA en entreprise</p>
-            <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-              <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-              <rect x="285" y="80" width="110" height="44" rx="10" fill="rgba(79,142,247,0.15)" stroke="#4f8ef7" stroke-width="1.5"/>
-              <text x="340" y="107" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="600" fill="#4f8ef7">Intelligence</text>
-              <text x="340" y="122" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#4f8ef7">Artificielle</text>
-              <rect x="20" y="16" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="85" y="33" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Automatisation</text>
-              <text x="85" y="47" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">taches repetitives</text>
-              <rect x="20" y="80" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="85" y="97" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Analyse de donnees</text>
-              <text x="85" y="111" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">aide a la decision</text>
-              <rect x="20" y="144" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="85" y="161" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Chatbots / SAV</text>
-              <text x="85" y="175" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">service client 24/7</text>
-              <rect x="530" y="16" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="595" y="33" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Generation contenu</text>
-              <text x="595" y="47" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">texte, image, code</text>
-              <rect x="530" y="80" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="595" y="97" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Maintenance predictive</text>
-              <text x="595" y="111" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">industrie 4.0</text>
-              <rect x="530" y="144" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-              <text x="595" y="161" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Personnalisation</text>
-              <text x="595" y="175" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">marketing, RH</text>
-              <line x1="150" y1="35" x2="283" y2="95" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-              <line x1="150" y1="99" x2="283" y2="102" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-              <line x1="150" y1="163" x2="283" y2="110" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-              <line x1="395" y1="95" x2="528" y2="35" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-              <line x1="395" y1="102" x2="528" y2="99" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-              <line x1="395" y1="110" x2="528" y2="163" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
-            </svg>
-          </div>
-          <div class="rss-feed">
-            <h5>Articles recents</h5>
-            <div class="rss-item"><a href="https://itsocial.fr/intelligence-artificielle/intelligence-artificielle-articles/pourquoi-lusage-de-lia-recule-en-entreprise-pour-la-premiere-fois-depuis-son-deploiement-massif/" target="_blank" rel="noopener">Pourquoi l'usage de l'IA recule en entreprise pour la premiere fois</a><div class="rss-item-meta"><span class="rss-source-label">IT Social</span><span class="rss-date">17 mars 2026</span></div></div>
-            <div class="rss-item"><a href="https://www.informatiquenews.fr/recap-2025-les-principales-actualites-ia-de-lannee-108702" target="_blank" rel="noopener">Recap 2025 : les principales actualites IA</a><div class="rss-item-meta"><span class="rss-source-label">Informatique News</span><span class="rss-date">25 dec. 2025</span></div></div>
-            <div class="rss-item"><a href="https://www.oecd.org/fr/about/news/announcements/2026/02/ai-firms-capture-61-percent-of-global-venture-capital-in-2025.html" target="_blank" rel="noopener">Les entreprises d'IA captent 61 % du capital-risque mondial en 2025</a><div class="rss-item-meta"><span class="rss-source-label">OCDE</span><span class="rss-date">fev. 2026</span></div></div>
-          </div>
-        </div>
-
-        <!-- Veille 2 : Cloud -->
-        <div class="veille-card">
-          <div class="veille-header">
-            <div>
-              <div class="veille-topic">⛅ Le Cloud Computing</div>
-              <div class="veille-desc">Evolutions des infrastructures cloud, hybride, souverain et tendances du marche.</div>
-            </div>
-          </div>
-          <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);color:var(--muted);font-size:.875rem;line-height:1.8;">
-            <p>Le Cloud Computing designe l'acces a des ressources informatiques via Internet, sans avoir a posseder ou gerer une infrastructure physique. Les entreprises louent ces ressources a la demande aupres de fournisseurs comme AWS, Azure ou Google Cloud.</p>
-            <p style="margin-top:.75rem;">On distingue trois modeles principaux : le <strong style="color:var(--text)">IaaS</strong>, le <strong style="color:var(--text)">PaaS</strong> et le <strong style="color:var(--text)">SaaS</strong>. En 2025, le marche mondial du cloud a franchi la barre des 100 milliards de dollars par trimestre.</p>
-          </div>
-          <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
-            <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.75rem;">Schema — Les 3 modeles du Cloud</p>
-            <svg width="100%" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-              <rect x="30" y="20" width="180" height="160" rx="12" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.25)" stroke-width="1.5"/>
-              <text x="120" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#4f8ef7">IaaS</text>
-              <text x="120" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Infrastructure as a Service</text>
-              <rect x="50" y="82" width="140" height="26" rx="6" fill="rgba(79,142,247,0.12)" stroke="none"/>
-              <text x="120" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Serveurs virtuels</text>
-              <rect x="50" y="114" width="140" height="26" rx="6" fill="rgba(79,142,247,0.08)" stroke="none"/>
-              <text x="120" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Stockage</text>
-              <rect x="50" y="146" width="140" height="26" rx="6" fill="rgba(79,142,247,0.05)" stroke="none"/>
-              <text x="120" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: AWS EC2, Azure VM</text>
-              <rect x="250" y="20" width="180" height="160" rx="12" fill="rgba(124,92,252,0.07)" stroke="rgba(124,92,252,0.25)" stroke-width="1.5"/>
-              <text x="340" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#7c5cfc">PaaS</text>
-              <text x="340" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Platform as a Service</text>
-              <rect x="270" y="82" width="140" height="26" rx="6" fill="rgba(124,92,252,0.12)" stroke="none"/>
-              <text x="340" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Environnement dev</text>
-              <rect x="270" y="114" width="140" height="26" rx="6" fill="rgba(124,92,252,0.08)" stroke="none"/>
-              <text x="340" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Deploiement applis</text>
-              <rect x="270" y="146" width="140" height="26" rx="6" fill="rgba(124,92,252,0.05)" stroke="none"/>
-              <text x="340" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: Heroku, Google App Engine</text>
-              <rect x="470" y="20" width="180" height="160" rx="12" fill="rgba(48,232,192,0.07)" stroke="rgba(48,232,192,0.25)" stroke-width="1.5"/>
-              <text x="560" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#30e8c0">SaaS</text>
-              <text x="560" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Software as a Service</text>
-              <rect x="490" y="82" width="140" height="26" rx="6" fill="rgba(48,232,192,0.12)" stroke="none"/>
-              <text x="560" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Logiciels en ligne</text>
-              <rect x="490" y="114" width="140" height="26" rx="6" fill="rgba(48,232,192,0.08)" stroke="none"/>
-              <text x="560" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Pret a l'emploi</text>
-              <rect x="490" y="146" width="140" height="26" rx="6" fill="rgba(48,232,192,0.05)" stroke="none"/>
-              <text x="560" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: Gmail, Microsoft 365</text>
-            </svg>
-          </div>
-          <div class="rss-feed">
-            <h5>Articles recents</h5>
-            <div class="rss-item"><a href="https://www.itforbusiness.fr/1026-milliards-en-un-trimestre-le-cloud-semballe-et-lia-y-est-pour-beaucoup-98962" target="_blank" rel="noopener">102,6 milliards $ en un trimestre : le cloud s'emballe au T3 2025</a><div class="rss-item-meta"><span class="rss-source-label">IT for Business</span><span class="rss-date">7 jan. 2026</span></div></div>
-            <div class="rss-item"><a href="https://www.lemagit.fr/actualites/366637507/Les-tendances-du-cloud-IaaS-en-2026" target="_blank" rel="noopener">Les tendances du cloud IaaS en 2026</a><div class="rss-item-meta"><span class="rss-source-label">LeMagIT</span><span class="rss-date">jan. 2026</span></div></div>
-            <div class="rss-item"><a href="https://www.solutions-numeriques.com/avis-dexpert-trois-tendances-qui-redefiniront-les-infrastructures-cloud-des-entreprises-et-des-administrations-en-2026/" target="_blank" rel="noopener">Trois tendances qui redefiniront les infrastructures Cloud en 2026</a><div class="rss-item-meta"><span class="rss-source-label">Solutions Numeriques</span><span class="rss-date">19 dec. 2025</span></div></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="footer-name">Leo <span>Decroix</span></div>
-    <div class="footer-sub">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
-    <div class="footer-links">
-      <a onclick="navigate('home')" style="cursor:pointer">Accueil</a>
-      <a onclick="navigate('projets')" style="cursor:pointer">Projets</a>
-      <a href="mailto:decroixleo55@gmail.com">decroixleo55@gmail.com</a>
-    </div>
-    <div class="footer-copy">2026 Leo Decroix -- Portfolio BTS SIO SISR</div>
-  </footer>
-
-</div><!-- /page-veille -->
-
-
-<!-- ── PDF.js pour le tableau de compétences ── -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-  /* ═══════════════════════════════════════
-     ROUTER SPA
-  ═══════════════════════════════════════ */
-  const PAGES = ['home', 'projets', 'veille'];
-
-  function navigate(target) {
-    PAGES.forEach(p => {
-      document.getElementById('page-' + p).classList.remove('active');
-    });
-    document.getElementById('page-' + target).classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    if (target === 'home') setTimeout(renderPdfCanvas, 50);
-
-    // URL par ancre (évite le 404 au refresh)
-    const hashes = { home: '', projets: '#projets', veille: '#veille' };
-    history.replaceState(null, '', hashes[target] !== undefined ? hashes[target] || location.pathname.replace(/#.*/, '') : '');
-
-    // Active state nav
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.classList.remove('active');
-      if (a.getAttribute('data-page') === target) a.classList.add('active');
-    });
-  }
-
-  // Bouton retour navigateur
-  window.addEventListener('popstate', function() {
-    const hash = location.hash.replace('#', '') || 'home';
-    const page = ['projets', 'veille'].includes(hash) ? hash : 'home';
-    navigate(page);
-  });
-
-  // Charger la bonne page au refresh selon le hash
-  (function() {
-    const hash = location.hash.replace('#', '');
-    if (hash === 'projets' || hash === 'veille') navigate(hash);
-  })();
-
-  /* ═══════════════════════════════════════
-     PDF.js — Tableau de compétences
-  ═══════════════════════════════════════ */
   pdfjsLib.GlobalWorkerOptions.workerSrc =
     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  var _pdfPage = null;
   pdfjsLib.getDocument('Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf').promise
-    .then(function(pdf) { return pdf.getPage(1); })
+    .then(function(pdf) {
+      return pdf.getPage(1);
+    })
     .then(function(page) {
-      _pdfPage = page;
-      renderPdfCanvas();
+      var canvas  = document.getElementById('tableau-canvas');
+      var scale   = 2.5; // haute résolution
+      var viewport = page.getViewport({ scale: scale });
+      canvas.height = viewport.height;
+      canvas.width  = viewport.width;
+      canvas.style.width = '100%';
+      page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
     });
+</script>
 
-  function renderPdfCanvas() {
-    if (!_pdfPage) return;
-    var canvas = document.getElementById('tableau-canvas');
-    if (!canvas) return;
-    var scale = 2.5;
-    var viewport = _pdfPage.getViewport({ scale: scale });
-    canvas.height = viewport.height;
-    canvas.width  = viewport.width;
-    canvas.style.width = '100%';
-    _pdfPage.render({ canvasContext: canvas.getContext('2d'), viewport: viewport });
+  </div>
+</section>
+
+<section id="projets">
+  <div class="container">
+    <div class="section-label">Realisations</div>
+    <h2 class="section-title">Projets <span>d'etudes</span></h2>
+    <div class="projets-grid">
+
+      <div class="projet-card">
+        <div class="projet-header">
+          <div class="projet-num">Projet 01</div>
+          <div class="projet-title">Installation complete d'une infrastructure fonctionnelle</div>
+          <span class="projet-type" style="background:rgba(79,142,247,0.1);color:var(--accent);border:1px solid rgba(79,142,247,0.25)">Infrastructure Systemes &amp; Reseaux</span>
+        </div>
+        <div class="projet-body">
+          <p class="projet-desc">Remplacement du switch par un modele plus performant, mise en place d'un serveur NAS pour le stockage centralise des donnees, et integration des postes au reseau avec attribution d'adresses IP fixes.</p>
+          <div class="projet-section-title">Competences E4 couvertes</div>
+          <div class="tech-list" style="margin-bottom:1rem">
+            <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Gerer le patrimoine</span>
+            <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Repondre aux incidents</span>
+            <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Travailler en mode projet</span>
+            <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Mettre a disposition un service</span>
+            <span class="tech-badge" style="color:var(--accent);border-color:rgba(79,142,247,0.3)">Developpement professionnel</span>
+          </div>
+          <div class="projet-section-title">Technologies utilisees</div>
+          <div class="tech-list">
+            <span class="tech-badge">Switch reseau</span>
+            <span class="tech-badge">Serveur NAS</span>
+            <span class="tech-badge">IP fixe</span>
+            <span class="tech-badge">TCP/IP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="projet-card">
+        <div class="projet-header">
+          <div class="projet-num">Projet 02</div>
+          <div class="projet-title">Automatisation de deploiement de serveur de jeu Minecraft</div>
+          <span class="projet-type" style="background:rgba(48,232,192,0.1);color:var(--accent3);border:1px solid rgba(48,232,192,0.25)">Scripting &amp; Automatisation</span>
+        </div>
+        <div class="projet-body">
+          <p class="projet-desc">Mise en place d'un systeme d'automatisation pour le deploiement de serveurs de jeu Minecraft : creation de scripts permettant d'installer, configurer et lancer automatiquement un serveur, gestion des dependances (Java, configuration memoire).</p>
+          <div class="projet-section-title">Competences E4 couvertes</div>
+          <div class="tech-list" style="margin-bottom:1rem">
+            <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Gerer le patrimoine</span>
+            <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Travailler en mode projet</span>
+            <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Mettre a disposition un service</span>
+            <span class="tech-badge" style="color:var(--accent3);border-color:rgba(48,232,192,0.3)">Developpement professionnel</span>
+          </div>
+          <div class="projet-section-title">Technologies utilisees</div>
+          <div class="tech-list">
+            <span class="tech-badge">Linux</span>
+            <span class="tech-badge">Bash / Shell</span>
+            <span class="tech-badge">Java</span>
+            <span class="tech-badge">SSH</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="veille">
+  <div class="container">
+    <div class="section-label">Veille technologique</div>
+    <h2 class="section-title">Mes <span>veilles</span></h2>
+    <p class="veille-intro">Deux themes de veille technologique suivis regulierement dans le cadre de mon BTS SIO SISR.</p>
+    <div style="display:flex;flex-direction:column;gap:3rem;">
+
+      <div class="veille-card" style="border-radius:16px;">
+        <div class="veille-header">
+          <div>
+            <div class="veille-topic">&#129504; L'IA au sein des entreprises</div>
+            <div class="veille-desc">Comment l'intelligence artificielle transforme les organisations et les metiers.</div>
+          </div>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);color:var(--muted);font-size:.875rem;line-height:1.8;">
+          <p>L'intelligence artificielle (IA) designe des systemes capables d'apprendre a partir de donnees pour accomplir des taches jusqu'ici reservees aux humains. En entreprise, elle s'integre dans les processus metiers pour <strong style="color:var(--text)">gagner en productivite, reduire les erreurs et personnaliser les services</strong>.</p>
+          <p style="margin-top:.75rem;">En 2025, l'acces des collaborateurs a l'IA a augmente de 50 % et 82 % des entreprises utilisent l'IA generative au moins une fois par semaine.</p>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+          <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.75rem;">Schema — Cas d'usage de l'IA en entreprise</p>
+          <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+            <rect x="285" y="80" width="110" height="44" rx="10" fill="rgba(79,142,247,0.15)" stroke="#4f8ef7" stroke-width="1.5"/>
+            <text x="340" y="107" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="600" fill="#4f8ef7">Intelligence</text>
+            <text x="340" y="122" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#4f8ef7">Artificielle</text>
+            <rect x="20" y="16" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="85" y="33" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Automatisation</text>
+            <text x="85" y="47" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">taches repetitives</text>
+            <rect x="20" y="80" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="85" y="97" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Analyse de donnees</text>
+            <text x="85" y="111" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">aide a la decision</text>
+            <rect x="20" y="144" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="85" y="161" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Chatbots / SAV</text>
+            <text x="85" y="175" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">service client 24/7</text>
+            <rect x="530" y="16" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="595" y="33" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Generation contenu</text>
+            <text x="595" y="47" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">texte, image, code</text>
+            <rect x="530" y="80" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="595" y="97" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Maintenance predictive</text>
+            <text x="595" y="111" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">industrie 4.0</text>
+            <rect x="530" y="144" width="130" height="38" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <text x="595" y="161" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" font-weight="600" fill="#f0f0f8">Personnalisation</text>
+            <text x="595" y="175" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">marketing, RH</text>
+            <line x1="150" y1="35" x2="283" y2="95" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+            <line x1="150" y1="99" x2="283" y2="102" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+            <line x1="150" y1="163" x2="283" y2="110" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+            <line x1="395" y1="95" x2="528" y2="35" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+            <line x1="395" y1="102" x2="528" y2="99" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+            <line x1="395" y1="110" x2="528" y2="163" stroke="#5a5a78" stroke-width="1" marker-end="url(#arr2)"/>
+          </svg>
+        </div>
+        <div class="rss-feed">
+          <h5>Articles recents</h5>
+          <div class="rss-item">
+            <a href="https://itsocial.fr/intelligence-artificielle/intelligence-artificielle-articles/pourquoi-lusage-de-lia-recule-en-entreprise-pour-la-premiere-fois-depuis-son-deploiement-massif/" target="_blank" rel="noopener">Pourquoi l'usage de l'IA recule en entreprise pour la premiere fois</a>
+            <div class="rss-item-meta"><span class="rss-source-label">IT Social</span><span class="rss-date">17 mars 2026</span></div>
+          </div>
+          <div class="rss-item">
+            <a href="https://www.informatiquenews.fr/recap-2025-les-principales-actualites-ia-de-lannee-108702" target="_blank" rel="noopener">Recap 2025 : les principales actualites IA</a>
+            <div class="rss-item-meta"><span class="rss-source-label">Informatique News</span><span class="rss-date">25 dec. 2025</span></div>
+          </div>
+          <div class="rss-item">
+            <a href="https://www.oecd.org/fr/about/news/announcements/2026/02/ai-firms-capture-61-percent-of-global-venture-capital-in-2025.html" target="_blank" rel="noopener">Les entreprises d'IA captent 61 % du capital-risque mondial en 2025</a>
+            <div class="rss-item-meta"><span class="rss-source-label">OCDE</span><span class="rss-date">fev. 2026</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="veille-card" style="border-radius:16px;">
+        <div class="veille-header">
+          <div>
+            <div class="veille-topic">&#9925; Le Cloud Computing</div>
+            <div class="veille-desc">Evolutions des infrastructures cloud, hybride, souverain et tendances du marche.</div>
+          </div>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);color:var(--muted);font-size:.875rem;line-height:1.8;">
+          <p>Le Cloud Computing designe l'acces a des ressources informatiques via Internet, sans avoir a posseder ou gerer une infrastructure physique. Les entreprises louent ces ressources a la demande aupres de fournisseurs comme AWS, Azure ou Google Cloud.</p>
+          <p style="margin-top:.75rem;">On distingue trois modeles principaux : le <strong style="color:var(--text)">IaaS</strong>, le <strong style="color:var(--text)">PaaS</strong> et le <strong style="color:var(--text)">SaaS</strong>. En 2025, le marche mondial du cloud a franchi la barre des 100 milliards de dollars par trimestre.</p>
+        </div>
+        <div style="padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);">
+          <p style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.75rem;">Schema — Les 3 modeles du Cloud</p>
+          <svg width="100%" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+            <rect x="30" y="20" width="180" height="160" rx="12" fill="rgba(79,142,247,0.07)" stroke="rgba(79,142,247,0.25)" stroke-width="1.5"/>
+            <text x="120" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#4f8ef7">IaaS</text>
+            <text x="120" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Infrastructure as a Service</text>
+            <rect x="50" y="82" width="140" height="26" rx="6" fill="rgba(79,142,247,0.12)" stroke="none"/>
+            <text x="120" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Serveurs virtuels</text>
+            <rect x="50" y="114" width="140" height="26" rx="6" fill="rgba(79,142,247,0.08)" stroke="none"/>
+            <text x="120" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Stockage</text>
+            <rect x="50" y="146" width="140" height="26" rx="6" fill="rgba(79,142,247,0.05)" stroke="none"/>
+            <text x="120" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: AWS EC2, Azure VM</text>
+            <rect x="250" y="20" width="180" height="160" rx="12" fill="rgba(124,92,252,0.07)" stroke="rgba(124,92,252,0.25)" stroke-width="1.5"/>
+            <text x="340" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#7c5cfc">PaaS</text>
+            <text x="340" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Platform as a Service</text>
+            <rect x="270" y="82" width="140" height="26" rx="6" fill="rgba(124,92,252,0.12)" stroke="none"/>
+            <text x="340" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Environnement dev</text>
+            <rect x="270" y="114" width="140" height="26" rx="6" fill="rgba(124,92,252,0.08)" stroke="none"/>
+            <text x="340" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Deploiement applis</text>
+            <rect x="270" y="146" width="140" height="26" rx="6" fill="rgba(124,92,252,0.05)" stroke="none"/>
+            <text x="340" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: Heroku, Google App Engine</text>
+            <rect x="470" y="20" width="180" height="160" rx="12" fill="rgba(48,232,192,0.07)" stroke="rgba(48,232,192,0.25)" stroke-width="1.5"/>
+            <text x="560" y="50" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="700" fill="#30e8c0">SaaS</text>
+            <text x="560" y="68" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="10" fill="#8888a8">Software as a Service</text>
+            <rect x="490" y="82" width="140" height="26" rx="6" fill="rgba(48,232,192,0.12)" stroke="none"/>
+            <text x="560" y="99" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Logiciels en ligne</text>
+            <rect x="490" y="114" width="140" height="26" rx="6" fill="rgba(48,232,192,0.08)" stroke="none"/>
+            <text x="560" y="131" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#f0f0f8">Pret a l'emploi</text>
+            <rect x="490" y="146" width="140" height="26" rx="6" fill="rgba(48,232,192,0.05)" stroke="none"/>
+            <text x="560" y="163" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="11" fill="#8888a8">Ex: Gmail, Microsoft 365</text>
+          </svg>
+        </div>
+        <div class="rss-feed">
+          <h5>Articles recents</h5>
+          <div class="rss-item">
+            <a href="https://www.itforbusiness.fr/1026-milliards-en-un-trimestre-le-cloud-semballe-et-lia-y-est-pour-beaucoup-98962" target="_blank" rel="noopener">102,6 milliards $ en un trimestre : le cloud s'emballe au T3 2025</a>
+            <div class="rss-item-meta"><span class="rss-source-label">IT for Business</span><span class="rss-date">7 jan. 2026</span></div>
+          </div>
+          <div class="rss-item">
+            <a href="https://www.lemagit.fr/actualites/366637507/Les-tendances-du-cloud-IaaS-en-2026" target="_blank" rel="noopener">Les tendances du cloud IaaS en 2026</a>
+            <div class="rss-item-meta"><span class="rss-source-label">LeMagIT</span><span class="rss-date">jan. 2026</span></div>
+          </div>
+          <div class="rss-item">
+            <a href="https://www.solutions-numeriques.com/avis-dexpert-trois-tendances-qui-redefiniront-les-infrastructures-cloud-des-entreprises-et-des-administrations-en-2026/" target="_blank" rel="noopener">Trois tendances qui redefiniront les infrastructures Cloud en 2026</a>
+            <div class="rss-item-meta"><span class="rss-source-label">Solutions Numeriques</span><span class="rss-date">19 dec. 2025</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Me joindre</div>
+    <h2 class="section-title">Formulaire de <span>contact</span></h2>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div>
+          <div class="contact-info-title">Une question ? Un projet ?</div>
+          <p class="contact-info-sub">N'hesite pas a me contacter pour toute opportunite de stage, d'alternance, ou simplement pour echanger sur un projet technique.</p>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:decroixleo55@gmail.com" class="contact-link">
+            <div class="contact-link-icon" style="background:rgba(79,142,247,0.12);color:var(--accent)">&#128231;</div>
+            <div class="contact-link-text"><span class="contact-link-label">E-mail</span><span class="contact-link-value">decroixleo55@gmail.com</span></div>
+          </a>
+          <a href="https://www.linkedin.com/in/l%C3%A9o-decroix-184489350/" target="_blank" class="contact-link">
+            <div class="contact-link-icon" style="background:rgba(124,92,252,0.12);color:var(--accent2)">&#128188;</div>
+            <div class="contact-link-text"><span class="contact-link-label">LinkedIn</span><span class="contact-link-value">linkedin.com/in/leo-decroix</span></div>
+          </a>
+          <a href="https://github.com/decroixleo" target="_blank" class="contact-link">
+            <div class="contact-link-icon" style="background:rgba(255,255,255,0.06);color:var(--text)">&#128024;</div>
+            <div class="contact-link-text"><span class="contact-link-label">GitHub</span><span class="contact-link-value">github.com/decroixleo</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="f-nom">Nom</label>
+            <input class="form-input" type="text" id="f-nom" placeholder="Votre nom" />
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label" for="f-email">E-mail</label>
+            <input class="form-input" type="email" id="f-email" placeholder="votre@email.fr" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-sujet">Sujet</label>
+          <input class="form-input" type="text" id="f-sujet" placeholder="Stage, alternance, question technique..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-message">Message</label>
+          <textarea class="form-textarea" id="f-message" placeholder="Votre message..."></textarea>
+        </div>
+        <button class="form-submit" id="form-btn">
+          <span id="form-btn-text">Envoyer le message</span>
+          <span id="form-btn-icon">&#8594;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Leo <span>Decroix</span></div>
+  <div class="footer-sub">BTS SIO -- Option SISR -- AFTEC 2024-2026</div>
+  <div class="footer-links">
+    <a href="mailto:decroixleo55@gmail.com">decroixleo55@gmail.com</a>
+    <a href="https://www.linkedin.com/in/l%C3%A9o-decroix-184489350/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/decroixleo" target="_blank">GitHub</a>
+  </div>
+  <div class="footer-copy">2026 Leo Decroix -- Portfolio BTS SIO SISR</div>
+</footer>
+
+<script>
+  /* ── Lightbox PDF ── */
+  const PDF_PATH = 'Annexe-6-1-Tableau-de-synthese-Epreuve-E4-BTS-SIO(1).pdf';
+
+  function openPdfLightbox() {
+    var overlay = document.getElementById('pdf-lightbox');
+    var frame   = document.getElementById('pdf-lightbox-frame');
+    if (!frame.src || frame.src === window.location.href) {
+      frame.src = PDF_PATH + '#toolbar=1&navpanes=0&view=FitH';
+    }
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
 
-  /* ═══════════════════════════════════════
-     Lightbox PDF
-  ═══════════════════════════════════════ */
   function closePdfLightbox() {
     document.getElementById('pdf-lightbox').classList.remove('active');
     document.body.style.overflow = '';
   }
+
   document.getElementById('pdf-lightbox').addEventListener('click', function(e) {
     if (e.target === this) closePdfLightbox();
   });
+
+  /* ── Lightbox image (conservé) ── */
+  function openLightbox() {
+    var overlay = document.getElementById('lightbox');
+    var mainImg = document.getElementById('tableau-main');
+    if (mainImg) document.getElementById('lightbox-img').src = mainImg.src;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(event) {
+    if (event.target === document.getElementById('lightbox')) closeLightboxBtn();
+  }
+  function closeLightboxBtn() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  /* ── Fermeture avec Échap ── */
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closePdfLightbox();
+    if (e.key === 'Escape') {
+      closePdfLightbox();
+      closeLightboxBtn();
+    }
   });
 </script>
 </body>
