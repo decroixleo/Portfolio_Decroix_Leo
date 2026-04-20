@@ -591,10 +591,13 @@
     const hashes = { home: '', projets: '#projets', veille: '#veille' };
     history.replaceState(null, '', hashes[target] !== undefined ? hashes[target] || location.pathname.replace(/#.*/, '') : '');
 
-    // Active state nav
+    // Active state nav (uniquement projets et veille)
     document.querySelectorAll('.nav-links a').forEach(a => {
       a.classList.remove('active');
-      if (a.getAttribute('data-page') === target) a.classList.add('active');
+      const page = a.getAttribute('data-page');
+      if ((page === 'projets' || page === 'veille') && page === target) {
+        a.classList.add('active');
+      }
     });
   }
 
