@@ -303,6 +303,29 @@
     .footer-links a:hover { color: var(--accent); }
     .footer-copy { color: var(--muted2); font-size: .75rem; }
 
+    /* Badge entreprise */
+    .entreprise-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 700; padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(247,165,79,0.1); color: #f7a54f;
+      border: 1px solid rgba(247,165,79,0.3);
+      white-space: nowrap;
+    }
+
+    /* Note encart entreprise */
+    .note-entreprise {
+      background: rgba(247,165,79,0.07);
+      border: 1px solid rgba(247,165,79,0.22);
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      font-size: .85rem;
+      color: #f7a54f;
+      margin-top: .9rem;
+      line-height: 1.7;
+    }
+    .note-entreprise strong { color: #f7a54f; }
+
     /* Responsive */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
@@ -484,7 +507,7 @@
   <section style="padding:4rem 2rem;">
     <div class="container">
 
-      <!-- PROJET 01 — NAS -->
+      <!-- ═══ PROJET 01 — NAS ═══ -->
       <div class="projet-block">
         <div class="projet-block-header">
           <div class="projet-block-meta">
@@ -493,15 +516,26 @@
               Projet 01
             </span>
             <div class="projet-block-title">Infrastructure NAS avec Active Directory et partage SMB</div>
+            <!-- Badge "réalisé en entreprise" -->
+            <span class="entreprise-badge">🏢 Réalisé en entreprise — reproduit sur Proxmox pour l'épreuve E4</span>
           </div>
-          <span class="projet-type-pill" style="background:rgba(79,142,247,0.1);color:var(--accent);border:1px solid rgba(79,142,247,0.25);">Infrastructure Systèmes &amp; Réseaux</span>
+          <!-- Colonne droite du header : type + bouton téléchargement -->
+          <div style="display:flex;flex-direction:column;gap:.6rem;align-items:flex-end;flex-shrink:0;">
+            <span class="projet-type-pill" style="background:rgba(79,142,247,0.1);color:var(--accent);border:1px solid rgba(79,142,247,0.25);">Infrastructure Systèmes &amp; Réseaux</span>
+            <a href="Livrable_projet_Infra.pdf" download class="btn btn-outline" style="font-size:.78rem;padding:7px 16px;">↓ Télécharger le rapport</a>
+          </div>
         </div>
 
         <div class="projet-block-body">
           <div class="projet-col-left">
             <div class="col-section-label">Contexte &amp; Description</div>
             <div class="projet-context-text">
-              <p>Ce projet a été réalisé dans un environnement virtualisé sous <strong>Proxmox</strong>, segmenté en deux VLANs distincts routés via <strong>pfSense</strong>. L'objectif était de déployer une infrastructure réseau complète intégrant un contrôleur de domaine, un serveur de fichiers partagés et un poste client Windows joint au domaine.</p>
+              <p>Ce projet a été initialement réalisé dans un contexte professionnel, dans le cadre de mon alternance chez <strong>La Boutique Regeco</strong>. Afin de répondre aux exigences de l'épreuve E4 du BTS SIO et de pouvoir le documenter et le présenter dans des conditions reproductibles, il a été intégralement reproduit dans un environnement virtualisé sous <strong>Proxmox</strong>.</p>
+              <!-- Note encart entreprise -->
+              <p class="note-entreprise">
+                ⚡ <strong>Note :</strong> La mise en place originale de cette infrastructure a été effectuée en entreprise. La version présentée ici est une reproduction fidèle réalisée sur <strong>Proxmox</strong> spécifiquement pour les besoins de l'épreuve E4, avec la même architecture et les mêmes configurations.
+              </p>
+              <p>L'environnement est segmenté en deux VLANs distincts routés via <strong>pfSense</strong>. L'objectif était de déployer une infrastructure réseau complète intégrant un contrôleur de domaine, un serveur de fichiers partagés et un poste client Windows joint au domaine.</p>
               <p>Le <strong>VLAN 40 "PROD"</strong> héberge le serveur <strong>Samba-LEO-01</strong> (10.40.0.10), configuré en contrôleur de domaine Active Directory (AD DS) et serveur DNS. Le <strong>VLAN 44 "PROJET"</strong> accueille un PC client Windows membre du domaine ainsi que le serveur <strong>TrueNAS-LEO-01</strong> (10.44.0.10), assurant le stockage centralisé via protocole SMB avec authentification Kerberos gérée par l'AD.</p>
               <p>Ce projet a permis de valider la segmentation réseau par VLAN, la gestion des droits d'accès via Active Directory, et le déploiement d'un stockage partagé sécurisé dans une configuration proche des environnements professionnels.</p>
             </div>
@@ -548,7 +582,7 @@
         </div>
       </div>
 
-      <!-- PROJET 02 — ANSIBLE -->
+      <!-- ═══ PROJET 02 — ANSIBLE ═══ -->
       <div class="projet-block">
         <div class="projet-block-header">
           <div class="projet-block-meta">
@@ -558,7 +592,11 @@
             </span>
             <div class="projet-block-title">Déploiement automatisé de serveurs Minecraft avec Ansible</div>
           </div>
-          <span class="projet-type-pill" style="background:rgba(48,232,192,0.1);color:var(--accent3);border:1px solid rgba(48,232,192,0.25);">Scripting &amp; Automatisation</span>
+          <!-- Colonne droite du header : type + bouton téléchargement -->
+          <div style="display:flex;flex-direction:column;gap:.6rem;align-items:flex-end;flex-shrink:0;">
+            <span class="projet-type-pill" style="background:rgba(48,232,192,0.1);color:var(--accent3);border:1px solid rgba(48,232,192,0.25);">Scripting &amp; Automatisation</span>
+            <a href="LIVRABLE-PROJET-ANSIBLE-DECROIX-LEO.pdf" download class="btn btn-outline" style="font-size:.78rem;padding:7px 16px;">↓ Télécharger le rapport</a>
+          </div>
         </div>
 
         <div class="projet-block-body">
