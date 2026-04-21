@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Léo Decroix — Portfolio BTS SIO SISR</title>
+
+  <!-- ✅ FAVICON LD -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%234f8ef7'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='13' fill='white'>LD</text></svg>">
+
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -178,6 +182,39 @@
     .pdf-lightbox-frame { flex: 1; border: 1px solid var(--border2); border-top: none; border-radius: 0 0 12px 12px; overflow: hidden; }
     .pdf-lightbox-frame iframe { width: 100%; height: 100%; border: none; display: block; }
 
+    /* ── Mockup Feedly ── */
+    .feedly-mockup-wrap { font-family: -apple-system, 'Segoe UI', sans-serif; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 8px 40px rgba(0,0,0,0.45); margin-bottom: 3rem; }
+    .feedly-topbar { background: #1c1c1e; display: flex; align-items: center; gap: 10px; padding: 9px 14px; }
+    .feedly-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .feedly-url-bar { background: #2c2c2e; border-radius: 5px; flex: 1; height: 22px; display: flex; align-items: center; padding: 0 10px; }
+    .feedly-url-bar span { font-size: 11px; color: #888; }
+    .feedly-body { display: flex; height: 340px; }
+    .feedly-sidebar { width: 200px; background: #1e2025; border-right: 1px solid #2a2a2e; display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
+    .feedly-sidebar-top { padding: 12px 14px 8px; }
+    .feedly-logo-row { display: flex; align-items: center; gap: 7px; margin-bottom: 14px; }
+    .feedly-logo-icon { width: 22px; height: 22px; border-radius: 5px; background: #2ab24b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feedly-logo-icon svg { width: 12px; height: 12px; }
+    .feedly-logo-text { font-size: 13px; font-weight: 600; color: #e8e8e8; }
+    .feedly-nav-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font-size: 12px; color: #aaa; cursor: pointer; margin-bottom: 2px; }
+    .feedly-nav-item.active { background: rgba(255,255,255,0.08); color: #e8e8e8; }
+    .feedly-nav-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    .feedly-section-label { font-size: 10px; font-weight: 600; color: #444; text-transform: uppercase; letter-spacing: 0.08em; padding: 10px 14px 4px; }
+    .feedly-feed-item { display: flex; align-items: center; gap: 8px; padding: 5px 14px; font-size: 12px; color: #999; cursor: pointer; }
+    .feedly-feed-item:hover { background: rgba(255,255,255,0.04); }
+    .feedly-feed-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .feedly-count { margin-left: auto; font-size: 10px; background: rgba(255,255,255,0.1); color: #bbb; padding: 1px 6px; border-radius: 10px; }
+    .feedly-main { flex: 1; background: #f4f4ef; display: flex; flex-direction: column; overflow: hidden; }
+    .feedly-main-header { padding: 12px 16px 8px; border-bottom: 1px solid #e2e2d8; }
+    .feedly-main-title { font-size: 13px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; }
+    .feedly-main-sub { font-size: 11px; color: #999; }
+    .feedly-articles { overflow-y: auto; flex: 1; }
+    .feedly-article { padding: 10px 16px; border-bottom: 1px solid #e6e6de; cursor: pointer; }
+    .feedly-article.unread { background: #fff; }
+    .feedly-article-source { font-size: 10px; font-weight: 700; margin-bottom: 3px; }
+    .feedly-article-title { font-size: 12px; color: #222; line-height: 1.4; margin-bottom: 3px; }
+    .feedly-article.unread .feedly-article-title { font-weight: 600; }
+    .feedly-article-date { font-size: 10px; color: #aaa; }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       nav { padding: 0 1.25rem; }
@@ -185,6 +222,8 @@
       .about-grid, .projets-grid, .contact-layout { grid-template-columns: 1fr; }
       .info-grid, .form-row { grid-template-columns: 1fr; }
       .page-hero .container { flex-direction: column; align-items: flex-start; }
+      .feedly-body { height: auto; flex-direction: column; }
+      .feedly-sidebar { width: 100%; height: 120px; flex-direction: row; overflow-x: auto; }
     }
   </style>
 </head>
@@ -444,8 +483,9 @@
       <p style="color:var(--muted);font-size:.9rem;line-height:1.8;max-width:680px;margin-bottom:2rem;">
         Pour rester a jour sur mes deux themes de veille, j'utilise <strong style="color:var(--text)">Feedly</strong>, un agregateur de flux RSS. Cet outil me permet de centraliser en un seul endroit les articles de plusieurs sources fiables, sans avoir a visiter chaque site manuellement. Je consulte mon feed plusieurs fois par semaine et je sauvegarde les articles pertinents pour les analyser.
       </p>
+
       <!-- Etapes de la méthode -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-bottom:3rem;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding-bottom:2rem;">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.25rem;">
           <div style="width:32px;height:32px;border-radius:8px;background:rgba(79,142,247,0.15);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:var(--accent);margin-bottom:.9rem;">1</div>
           <div style="font-weight:700;font-size:.9rem;margin-bottom:.4rem;">Identifier les sources</div>
@@ -467,6 +507,84 @@
           <p style="color:var(--muted);font-size:.8rem;line-height:1.6;">Rediger une synthese des informations retenues et les integrer a mon portfolio de veille.</p>
         </div>
       </div>
+
+      <!-- ✅ MOCKUP FEEDLY -->
+      <div class="feedly-mockup-wrap">
+        <div class="feedly-topbar">
+          <div class="feedly-dot" style="background:#ff5f57;"></div>
+          <div class="feedly-dot" style="background:#ffbd2e;"></div>
+          <div class="feedly-dot" style="background:#28c840;"></div>
+          <div class="feedly-url-bar"><span>feedly.com/i/my</span></div>
+        </div>
+        <div class="feedly-body">
+          <div class="feedly-sidebar">
+            <div class="feedly-sidebar-top">
+              <div class="feedly-logo-row">
+                <div class="feedly-logo-icon">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="feedly-logo-text">feedly</span>
+              </div>
+              <div class="feedly-nav-item active">
+                <svg class="feedly-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Today
+              </div>
+              <div class="feedly-nav-item">
+                <svg class="feedly-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                All
+              </div>
+            </div>
+            <div class="feedly-section-label">Mes sources</div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#4f8ef7;"></div>IT Social<span class="feedly-count">3</span></div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#f74f4f;"></div>LeMagIT<span class="feedly-count">5</span></div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#f7a54f;"></div>Informatique News<span class="feedly-count">2</span></div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#2ab24b;"></div>OCDE<span class="feedly-count">1</span></div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#7c5cfc;"></div>IT for Business<span class="feedly-count">4</span></div>
+            <div class="feedly-feed-item"><div class="feedly-feed-dot" style="background:#30e8c0;"></div>Solutions Num.<span class="feedly-count">2</span></div>
+          </div>
+          <div class="feedly-main">
+            <div class="feedly-main-header">
+              <div class="feedly-main-title">Veille technologique — 17 articles non lus</div>
+              <div class="feedly-main-sub">6 sources · mise à jour automatique</div>
+            </div>
+            <div class="feedly-articles">
+              <div class="feedly-article unread">
+                <div class="feedly-article-source" style="color:#4f8ef7;">IT Social</div>
+                <div class="feedly-article-title">Pourquoi l'usage de l'IA recule en entreprise pour la première fois depuis son déploiement massif</div>
+                <div class="feedly-article-date">17 mars 2026</div>
+              </div>
+              <div class="feedly-article unread">
+                <div class="feedly-article-source" style="color:#7c5cfc;">IT for Business</div>
+                <div class="feedly-article-title">102,6 milliards $ en un trimestre : le cloud s'emballe, et l'IA y est pour beaucoup</div>
+                <div class="feedly-article-date">7 janv. 2026</div>
+              </div>
+              <div class="feedly-article unread">
+                <div class="feedly-article-source" style="color:#2ab24b;">OCDE</div>
+                <div class="feedly-article-title">Les entreprises d'IA captent 61 % du capital-risque mondial en 2025</div>
+                <div class="feedly-article-date">fév. 2026</div>
+              </div>
+              <div class="feedly-article">
+                <div class="feedly-article-source" style="color:#f74f4f;">LeMagIT</div>
+                <div class="feedly-article-title">Les tendances du cloud IaaS en 2026</div>
+                <div class="feedly-article-date">janv. 2026</div>
+              </div>
+              <div class="feedly-article">
+                <div class="feedly-article-source" style="color:#30e8c0;">Solutions Numériques</div>
+                <div class="feedly-article-title">Trois tendances qui redefiniront les infrastructures Cloud en 2026</div>
+                <div class="feedly-article-date">19 déc. 2025</div>
+              </div>
+              <div class="feedly-article">
+                <div class="feedly-article-source" style="color:#f7a54f;">Informatique News</div>
+                <div class="feedly-article-title">Recap 2025 : les principales actualités IA de l'année</div>
+                <div class="feedly-article-date">25 déc. 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bandeau outil -->
       <div style="background:var(--card);border:1px solid rgba(79,142,247,0.25);border-radius:14px;padding:1.25rem 1.5rem;display:flex;align-items:center;gap:1.25rem;margin-bottom:3rem;flex-wrap:wrap;">
         <div style="width:42px;height:42px;border-radius:10px;background:rgba(79,142,247,0.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">📡</div>
@@ -498,8 +616,6 @@
             </div>
             <span style="font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;background:rgba(79,142,247,0.1);color:var(--accent);border:1px solid rgba(79,142,247,0.25);white-space:nowrap;flex-shrink:0;">Theme 1</span>
           </div>
-
-          <!-- Définition + pourquoi ce thème -->
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
             <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
               <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.6rem;">Definition</div>
@@ -510,8 +626,6 @@
               <p style="color:var(--muted);font-size:.85rem;line-height:1.75;">En tant que futur technicien SISR, comprendre l'impact de l'IA sur les infrastructures IT est essentiel : elle genere de nouveaux besoins en puissance de calcul, en securite des donnees et en gestion des systemes.</p>
             </div>
           </div>
-
-          <!-- Chiffres clés -->
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border);">
             <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);text-align:center;">
               <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--accent);">+50%</div>
@@ -526,8 +640,6 @@
               <div style="color:var(--muted);font-size:.78rem;margin-top:.25rem;">du capital-risque mondial capte par les firmes IA</div>
             </div>
           </div>
-
-          <!-- Articles -->
           <div class="rss-feed">
             <h5>Articles collectes via Feedly</h5>
             <div class="rss-item">
@@ -557,7 +669,6 @@
             </div>
             <span style="font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;background:rgba(48,232,192,0.1);color:var(--accent3);border:1px solid rgba(48,232,192,0.25);white-space:nowrap;flex-shrink:0;">Theme 2</span>
           </div>
-
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-bottom:1px solid var(--border);">
             <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);">
               <div style="font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--muted2);text-transform:uppercase;margin-bottom:.6rem;">Definition</div>
@@ -568,7 +679,6 @@
               <p style="color:var(--muted);font-size:.85rem;line-height:1.75;">Le cloud est aujourd'hui au coeur des infrastructures des entreprises. En option SISR, maitriser ces environnements est indispensable : administration, securite, virtualisation et hybridation sont des competences cles du metier.</p>
             </div>
           </div>
-
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--border);">
             <div style="padding:1.25rem 1.5rem;border-right:1px solid var(--border);text-align:center;">
               <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.8rem;color:var(--accent3);">+29%</div>
@@ -583,7 +693,6 @@
               <div style="color:var(--muted);font-size:.78rem;margin-top:.25rem;">acteurs majeurs : AWS, Azure, Google Cloud</div>
             </div>
           </div>
-
           <div class="rss-feed">
             <h5>Articles collectes via Feedly</h5>
             <div class="rss-item">
@@ -643,11 +752,9 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     if (target === 'home') setTimeout(renderPdfCanvas, 50);
 
-    // URL par ancre (évite le 404 au refresh)
     const hashes = { home: '', projets: '#projets', veille: '#veille' };
     history.replaceState(null, '', hashes[target] !== undefined ? hashes[target] || location.pathname.replace(/#.*/, '') : '');
 
-    // Active state nav (uniquement projets et veille)
     document.querySelectorAll('.nav-links a').forEach(a => {
       a.classList.remove('active');
       const page = a.getAttribute('data-page');
@@ -657,14 +764,12 @@
     });
   }
 
-  // Bouton retour navigateur
   window.addEventListener('popstate', function() {
     const hash = location.hash.replace('#', '') || 'home';
     const page = ['projets', 'veille'].includes(hash) ? hash : 'home';
     navigate(page);
   });
 
-  // Charger la bonne page au refresh selon le hash
   (function() {
     const hash = location.hash.replace('#', '');
     if (hash === 'projets' || hash === 'veille') navigate(hash);
