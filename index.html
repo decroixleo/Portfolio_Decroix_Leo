@@ -488,8 +488,8 @@
           <div class="projet-col-left">
             <div class="col-section-label">Contexte &amp; Contraintes</div>
             <div class="projet-context-text">
-              <p>Mise en place d'un système de déploiement automatisé basé sur <strong>Ansible</strong> pour instancier des serveurs Minecraft Java Edition sur des conteneurs <strong>Proxmox LXC</strong>.</p>
-              <p><strong>Contrainte technique :</strong> Les conteneurs sont isolés et déployés sur un VLAN dédié pour garantir la segmentation et la sécurité du réseau.</p>
+              <p>Mise en place d'un système de déploiement automatisé basé sur <strong>Ansible</strong> pour instancier des serveurs Minecraft Java Edition sur des conteneurs <strong>Proxmox LXC</strong>[cite: 1].</p>
+              <p><strong>Contrainte technique :</strong> Les conteneurs sont isolés, reliés à un stockage NAS Synology en RAID 5 (NFSv4)[cite: 4] et déployés sur un VLAN dédié pour garantir la segmentation et la sécurité du réseau.</p>
             </div>
             <div class="col-section-label">Compétences du bloc B1 validées</div>
             <div class="comp-list">
@@ -502,6 +502,7 @@
             <div class="tech-list">
               <span class="tech-badge">Ansible</span>
               <span class="tech-badge">Proxmox LXC</span>
+              <span class="tech-badge">NFSv4 / NAS Synology</span>
               <span class="tech-badge">VLAN</span>
               <span class="tech-badge">Linux / Bash</span>
               <span class="tech-badge">SSH</span>
@@ -509,7 +510,7 @@
           </div>
 
           <div class="projet-col-right">
-            <div class="col-section-label">Schémas &amp; Captures (Cliquer pour agrandir)</div>
+            <div class="col-section-label">Schémas &amp; Documents associés (Cliquer pour ouvrir)</div>
             <div class="schema-gallery">
               <div class="schema-thumb" onclick="openSchemaLightbox('Schéma_Infra_Ansible.jpg','Schéma infrastructure')">
                 <img src="Schéma_Infra_Ansible.jpg" alt="Schéma infrastructure" loading="lazy" />
@@ -518,6 +519,31 @@
               <div class="schema-thumb" onclick="openSchemaLightbox('Schéma_Flux_Ansible.jpg','Diagramme de flux')">
                 <img src="Schéma_Flux_Ansible.jpg" alt="Diagramme de flux" loading="lazy" />
                 <div class="schema-label">Diagramme de flux</div>
+              </div>
+              <!-- Nouveaux documents PDF intégrés -->
+              <div class="schema-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg3);" onclick="window.open('Cahier des Charges - Projet Ansible.pdf', '_blank')">
+                <div style="text-align:center;padding:10px;">
+                  <div style="font-size:1.5rem;margin-bottom:4px;">📋</div>
+                  <div class="schema-label" style="position:static;background:none;">Cahier des Charges</div>
+                </div>
+              </div>
+              <div class="schema-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg3);" onclick="window.open('06_cahier_de_recette_tests.pdf', '_blank')">
+                <div style="text-align:center;padding:10px;">
+                  <div style="font-size:1.5rem;margin-bottom:4px;">✅</div>
+                  <div class="schema-label" style="position:static;background:none;">Cahier de Recette</div>
+                </div>
+              </div>
+              <div class="schema-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg3);" onclick="window.open('Procédure d\'Installation Ansible.pdf', '_blank')">
+                <div style="text-align:center;padding:10px;">
+                  <div style="font-size:1.5rem;margin-bottom:4px;">⚙️</div>
+                  <div class="schema-label" style="position:static;background:none;">Procédure d'Installation</div>
+                </div>
+              </div>
+              <div class="schema-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--bg3);" onclick="window.open('16_procedure_resolution_incidents.pdf', '_blank')">
+                <div style="text-align:center;padding:10px;">
+                  <div style="font-size:1.5rem;margin-bottom:4px;">🛡️</div>
+                  <div class="schema-label" style="position:static;background:none;">Tolérance de Panne &amp; Stockage</div>
+                </div>
               </div>
             </div>
           </div>
